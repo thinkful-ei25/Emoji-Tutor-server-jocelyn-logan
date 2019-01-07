@@ -3,12 +3,18 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const passport = require('passport');
 
+const localStrategy = require('./passport/local');
+const jwtStrategy = require('./passport/jwt'); 
 const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
-// const {dbConnect} = require('./db-knex');
+const authRouter = require('./routes/auth');
+const usersRouter = require('./routes/users'); 
+
 
 const app = express();
+app.use(express.json());
 
 app.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
@@ -21,6 +27,12 @@ app.use(
     origin: CLIENT_ORIGIN
   })
 );
+
+passport.use(localStrategy);
+passport.use(jwtStrategy); 
+
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter); 
 
 function runServer(port = PORT) {
   const server = app
