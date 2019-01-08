@@ -11,6 +11,7 @@ const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users'); 
+const emojisRouter = require('./routes/emojis'); 
 
 
 const app = express();
@@ -33,6 +34,7 @@ passport.use(jwtStrategy);
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter); 
+app.use('/api/emojis', emojisRouter);
 
 function runServer(port = PORT) {
   const server = app
