@@ -4,10 +4,7 @@ const mongoose = require('mongoose');
 
 const EmojiSchema = mongoose.Schema({
   emojiCode: {type: String, required: true},
-  emojiName:{type: String},
-  currentWeight:{type: Number},
-  guessTotal: {type:Number},
-  guessCorrect: {type:Number}
+  emojiName:{type: String}
 });
 
 EmojiSchema.set('toJSON', {
