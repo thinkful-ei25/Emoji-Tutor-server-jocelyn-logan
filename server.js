@@ -23,7 +23,7 @@ app.use(
 );
 
 app.use(
-  cors({
+  cors({ 
     origin: CLIENT_ORIGIN
   })
 );
