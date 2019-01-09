@@ -14,22 +14,24 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  list: [{
+    id: { type: mongoose.Schema.Types.ObjectId, ref: 'Emoji', required: true },
+    weight: { type: Number, required: true, default: 1 }
+  }]
 });
 
-UserSchema.methods.serialize = function() {
+UserSchema.methods.serialize = function () {
   return {
     username: this.username || '',
   };
 };
 
-UserSchema.methods.validatePassword = function(password) {
+UserSchema.methods.validatePassword = function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-UserSchema.statics.hashPassword = function(password) {
+UserSchema.statics.hashPassword = function (password) {
   return bcrypt.hash(password, 10);
 };
 
-const User = mongoose.model('User', UserSchema);
-
-module.exports = {User};
+module.exports = mongoose.model('User', UserSchema);

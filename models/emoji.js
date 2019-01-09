@@ -1,20 +1,18 @@
-'use strict'; 
+'use strict';
 
-const mongoose = require('mongoose'); 
+const mongoose = require('mongoose');
 
 const EmojiSchema = mongoose.Schema({
-  emojiCode: {type: String, required: true},
-  emojiName:{type: String},
-  currentWeight:{type: Number}
+  emojiCode: { type: String, required: true, default: '' },
+  emojiName: { type: String, required: true, default: '' }
 });
 
 EmojiSchema.set('toJSON', {
-  virtuals: true, 
+  virtuals: true,
   transform: (doc, result) => {
-    delete result._id; 
-    delete result.__v; 
+    delete result._id;
+    delete result.__v;
   }
-}); 
+});
 
-const Emoji = mongoose.model('Emoji', EmojiSchema); 
-module.exports = {Emoji};
+module.exports = mongoose.model('Emoji', EmojiSchema);

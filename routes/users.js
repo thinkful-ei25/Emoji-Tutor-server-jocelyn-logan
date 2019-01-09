@@ -2,18 +2,18 @@
 
 const express = require('express');
 
-const {User} = require('../models/user');
-
+const User = require('../models/user');
+const Emoji = require('../models/emoji');
 
 const router = express.Router();
 
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
-  User.findOne({_id: id})
+  User.findOne({ _id: id })
     .then(result => {
-      if(result){
+      if (result) {
         res.json(result);
-      }else{
+      } else {
         next();
       }
     })
@@ -24,18 +24,31 @@ router.get('/:id', (req, res, next) => {
 
 router.get('/', (req, res, next) => {
 
-  User.find() .sort('name') .then(results => { res.json(results); }) 
-    .catch(err => { next(err); }); });
+  User.find().sort('name').then(results => { res.json(results); })
+    .catch(err => { next(err); });
+});
 
 /* ========== POST/CREATE AN ITEM ========== */
 router.post('/', (req, res, next) => {
-  let {username, password}= req.body;
+  let { username, password } = req.body;
 
-  return User.hashPassword(password)
+  let list = [];
+
+  return Emoji.find()
+    .then(emojis => {
+      emojis.forEach(emoji => {
+        list.push({
+          id: emoji.id,
+          weight: 1
+        });
+      });
+      return User.hashPassword(password);
+    })
     .then(digest => {
       const newUser = {
         username,
         password: digest,
+        list
       };
       return User.create(newUser);
     })
