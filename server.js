@@ -6,12 +6,12 @@ const morgan = require('morgan');
 const passport = require('passport');
 
 const localStrategy = require('./passport/local');
-const jwtStrategy = require('./passport/jwt'); 
+const jwtStrategy = require('./passport/jwt');
 const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
 const authRouter = require('./routes/auth');
-const usersRouter = require('./routes/users'); 
-
+const usersRouter = require('./routes/users');
+const questionsRouter = require('./routes/questions');
 
 const app = express();
 app.use(express.json());
@@ -29,10 +29,12 @@ app.use(
 );
 
 passport.use(localStrategy);
-passport.use(jwtStrategy); 
+passport.use(jwtStrategy);
+const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: true });
 
 app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter); 
+app.use('/api/users', usersRouter);
+app.use('/api/questions', jwtAuth, questionsRouter);
 
 function runServer(port = PORT) {
   const server = app

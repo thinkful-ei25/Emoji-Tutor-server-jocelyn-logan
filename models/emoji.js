@@ -12,6 +12,7 @@ EmojiSchema.set('toJSON', {
   transform: (doc, result) => {
     delete result._id;
     delete result.__v;
+    delete result.password;
   }
 });
 
