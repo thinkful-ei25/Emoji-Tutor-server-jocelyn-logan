@@ -3,7 +3,7 @@
 const express = require('express');
 
 const User = require('../models/user');
-const Emoji = require('../models/emoji'); 
+const Emoji = require('../models/emoji');
 
 const router = express.Router();
 
@@ -11,23 +11,23 @@ const router = express.Router();
 
 
 router.get('/next', (req, res, next) => {
-  const userId = req.user.id; 
+  const userId = req.user.id;
   // list.push(question);
   // res.json(question);
-  User.findOne({userId})
+  User.findOne({ userId })
     .populate('list.emoji')
     .then(result => {
-      console.log('this is result', result); 
-      if(result){
-        const head = result.head; 
-        const nextEmoji = result.list[head]; 
-        res.json(nextEmoji); 
-      }else{
+      console.log('this is result', result);
+      if (result) {
+        const head = result.head;
+        const nextEmoji = result.list[head];
+        res.json(nextEmoji);
+      } else {
         next();
       }
     })
     .catch(err => {
-      next(err); 
+      next(err);
     });
 });
 
@@ -42,23 +42,46 @@ router.get('/next', (req, res, next) => {
 //insert the node by changing the next pointer
 
 router.post('/answer', (req, res, next) => {
-  const userId = req.user.id; 
+  const userId = req.user.id;
   const {
-    answer,
-    answeredEmojiId, 
-    answeredEmojiNext 
-  } = req.body; 
-  let currentHead; 
+    userAnswer
+  } = req.body;
 
-  User.findOne({userId})
-    .then(user =>  {
-      currentHead=user.head;
-    
+
+  User.findOne({ userId })
+    .then(user => {
+
+      //save the value of the current head
+      // save the node that you just answered
+      //find the location of the answered node based on weight
+      let answeredQ = user.list[user.head];
+      console.log('answeredQ', answeredQ)
+      let answeredQLast = user.head;
+      if (userAnswer === true) {
+        answeredQ.weight *= 2;
+      } else {
+        answeredQ.weight = 1;
+      }
+      //change the current head to whoever answered node's next 
+      //pointer is addressed to
+      //find the insertion point
+      //insert the node by changing the next pointer
+      user.head = answeredQ.next;
+
+      let currentQ = answeredQ;
+      for (let i = 0; i < answeredQ.weight && i < user.list.length; i++) {
+        let nextQ = currentQ.next;
+        currentQ = user.list[nextQ];
+      }
+      answeredQ.next = currentQ.next;
+      currentQ.next = answeredQLast;
+      user.save();
+    })
+    .then(user => {
+      res.sendStatus(204);
+      //console.log(user);
     });
-  
 });
-
-
 
 
 /*quick reference 
