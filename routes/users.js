@@ -64,4 +64,39 @@ router.post('/', (req, res, next) => {
     });
 });
 
+const list =
+  [
+    {
+      '_id': '222222222222222222222200',
+      'emojiCode': '\u{1F436}',
+      'emojiName': 'dog',
+    },
+    {
+      '_id': '222222222222222222222201',
+      'emojiCode': '\u{1F960}',
+      'emojiName': 'fortune cookie',
+    },
+    {
+      '_id': '222222222222222222222202',
+      'emojiCode': '\u{1F997}',
+      'emojiName': 'cricket',
+    },
+    {
+      '_id': '222222222222222222222203',
+      'emojiCode': '\u{1F9DF}',
+      'emojiName': 'zombie',
+    },
+    {
+      '_id': '222222222222222222222204',
+      'emojiCode': '\u{1F4A9}',
+      'emojiName': 'poop',
+    }
+  ];
+
+router.get('/questions', (req, res, next) => {
+  const question = list.shift();
+  list.push(question);
+  res.json(question)
+});
+
 module.exports = router;

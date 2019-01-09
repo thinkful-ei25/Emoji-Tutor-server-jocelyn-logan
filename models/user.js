@@ -15,7 +15,7 @@ const UserSchema = mongoose.Schema({
     required: true
   },
   list: [{
-    id: { type: mongoose.Schema.Types.ObjectId, ref: 'Emoji', required: true },
+    emoji: { type: mongoose.Schema.Types.ObjectId, ref: 'Emoji' },
     weight: { type: Number, required: true, default: 1 }
   }]
 });
