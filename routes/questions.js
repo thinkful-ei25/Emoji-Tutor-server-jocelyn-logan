@@ -3,23 +3,22 @@
 const express = require('express');
 
 const User = require('../models/user');
-const Emoji = require('../models/emoji');
 
 const router = express.Router();
 
-
-
-
 router.get('/next', (req, res, next) => {
-  const userId = req.user.id;
+  const userId = req.user._id;
+  console.log(userId);
+  console.log(req.user);
   // list.push(question);
   // res.json(question);
-  User.findOne({ userId })
+  User.findOne({ _id: userId })
     .populate('list.emoji')
     .then(result => {
-      console.log('this is result', result);
+      // console.log('this is result', result);
       if (result) {
         const head = result.head;
+        console.log(head);
         const nextEmoji = result.list[head];
         res.json(nextEmoji);
       } else {
@@ -42,26 +41,29 @@ router.get('/next', (req, res, next) => {
 //insert the node by changing the next pointer
 
 router.post('/answer', (req, res, next) => {
-  const userId = req.user.id;
+  const userId = req.user._id;
   const {
     userAnswer
   } = req.body;
-
-
-  User.findOne({ userId })
+  User.findOne({ _id: userId })
     .then(user => {
-
+      // console.log(req.body);
       //save the value of the current head
       // save the node that you just answered
       //find the location of the answered node based on weight
       let answeredQ = user.list[user.head];
-      console.log('answeredQ', answeredQ)
+      // console.log('answeredQ', answeredQ);
+
       let answeredQLast = user.head;
+      // console.log(userAnswer);
       if (userAnswer === true) {
+        // console.log('hit correct');
         answeredQ.weight *= 2;
       } else {
         answeredQ.weight = 1;
       }
+      console.log('user list', user.list);
+      // console.log('weight', answeredQ.weight);
       //change the current head to whoever answered node's next 
       //pointer is addressed to
       //find the insertion point
@@ -69,7 +71,10 @@ router.post('/answer', (req, res, next) => {
       user.head = answeredQ.next;
 
       let currentQ = answeredQ;
-      for (let i = 0; i < answeredQ.weight && i < user.list.length; i++) {
+      for (let i = 0; i < answeredQ.weight; i++) {
+        if (currentQ.next === null) {
+          break;
+        }
         let nextQ = currentQ.next;
         currentQ = user.list[nextQ];
       }
@@ -79,7 +84,6 @@ router.post('/answer', (req, res, next) => {
     })
     .then(user => {
       res.sendStatus(204);
-      //console.log(user);
     });
 });
 

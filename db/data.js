@@ -8,12 +8,12 @@ const users = [
     'list': [
       {
         'emoji': '222222222222222222222200',
-        'weight': 1, 
+        'weight': 1,
         'next': 1
       },
       {
         'emoji': '222222222222222222222201',
-        'weight': 1, 
+        'weight': 1,
         'next': 2
       },
       {
@@ -23,16 +23,16 @@ const users = [
       },
       {
         'emoji': '222222222222222222222203',
-        'weight': 1, 
-        'next':4
+        'weight': 1,
+        'next': 4
       },
       {
         'emoji': '222222222222222222222204',
-        'weight': 1, 
-        'next': 0
+        'weight': 1,
+        'next': null
       },
     ],
-    'head':0
+    'head': 0
   },
   {
     '_id': '333333333333333333333302',
@@ -41,12 +41,12 @@ const users = [
     'list': [
       {
         'emoji': '222222222222222222222200',
-        'weight': 1, 
+        'weight': 1,
         'next': 1
       },
       {
         'emoji': '222222222222222222222201',
-        'weight': 1, 
+        'weight': 1,
         'next': 2
       },
       {
@@ -56,16 +56,16 @@ const users = [
       },
       {
         'emoji': '222222222222222222222203',
-        'weight': 1, 
-        'next':4
+        'weight': 1,
+        'next': 4
       },
       {
         'emoji': '222222222222222222222204',
-        'weight': 1, 
-        'next': 0
+        'weight': 1,
+        'next': null
       },
     ],
-    'head':0
+    'head': 0
   }
 ];
 
