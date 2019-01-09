@@ -16,8 +16,10 @@ const UserSchema = mongoose.Schema({
   },
   list: [{
     emoji: { type: mongoose.Schema.Types.ObjectId, ref: 'Emoji' },
-    weight: { type: Number, required: true, default: 1 }
-  }]
+    weight: { type: Number, required: true, default: 1 }, 
+    next: {type: Number, required: true}
+  }], 
+  head: {type: Number, required: true, default:0}
 });
 
 UserSchema.methods.serialize = function () {

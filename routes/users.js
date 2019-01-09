@@ -7,6 +7,9 @@ const Emoji = require('../models/emoji');
 
 const router = express.Router();
 
+/* ========== GET USER BY ID + GET ALL USERS ========== */
+
+
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
   User.findOne({ _id: id })
@@ -28,7 +31,7 @@ router.get('/', (req, res, next) => {
     .catch(err => { next(err); });
 });
 
-/* ========== POST/CREATE AN ITEM ========== */
+/* ========== CREATE USER, ATTACH LIST ========== */
 router.post('/', (req, res, next) => {
   let { username, password } = req.body;
 
@@ -63,6 +66,9 @@ router.post('/', (req, res, next) => {
       next(err);
     });
 });
+
+
+
 
 
 module.exports = router;
