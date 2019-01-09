@@ -46,7 +46,7 @@ router.get('/next', (req, res, next) => {
   // list.push(question);
   // res.json(question);
   User.findOne({userId})
-    .populate('emoji')
+    .populate('list.emoji')
     .then(result => {
       console.log('this is result', result); 
       if(result){
@@ -62,8 +62,19 @@ router.get('/next', (req, res, next) => {
     });
 });
 
+//save the value of the current head
+// save the node that you just answered
+//find the location of the answered node based on mValue
+
+//change the current head to whoever answered node's next 
+//pointer is addressed to
+
+//find the insertion point
+//insert the node by changing the next pointer
+
 router.post('/answer', (req, res, next) => {
-  //algorithm implementation boiiii
+  const userId = req.user.id; 
+
 });
 
 module.exports = router;
