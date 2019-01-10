@@ -49,7 +49,7 @@ router.post('/', (req, res, next) => {
       }
       return User.hashPassword(password);
     })
-    .then(digest => {
+    .then(digest => { 
       const newUser = {
         username,
         password: digest,
