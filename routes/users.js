@@ -4,7 +4,7 @@ const express = require('express');
 
 const User = require('../models/user');
 const Emoji = require('../models/emoji');
-
+const UserStats = require('../models/userStat');
 const router = express.Router();
 
 /* ========== GET USER BY ID + GET ALL USERS ========== */
@@ -34,17 +34,19 @@ router.get('/', (req, res, next) => {
 /* ========== CREATE USER, ATTACH LIST ========== */
 router.post('/', (req, res, next) => {
   let { username, password } = req.body;
-
+  // console.log(req.body);
   let list = [];
 
   return Emoji.find()
     .then(emojis => {
-      emojis.forEach(emoji => {
+      console.log('emojis', emojis);
+      for (let i = 0; i < emojis.length; i++) {
         list.push({
-          id: emoji.id,
-          weight: 1
+          emoji: emojis[i]._id,
+          weight: 1,
+          next: i + 1
         });
-      });
+      }
       return User.hashPassword(password);
     })
     .then(digest => {
@@ -55,7 +57,14 @@ router.post('/', (req, res, next) => {
       };
       return User.create(newUser);
     })
+    .then(user => {
+      UserStats.create({
+        userId: user._id
+      });
+      return user;
+    })
     .then(result => {
+      // console.log(result);
       return res.status(201).location(`/api/users/${result.id}`).json(result);
     })
     .catch(err => {

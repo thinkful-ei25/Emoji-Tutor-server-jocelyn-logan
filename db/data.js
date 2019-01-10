@@ -71,18 +71,20 @@ const users = [
 
 const userStats = [
   {
-    '_id': '333333333333333333333301',
-    'correct':0, 
-    'incorrect':0,
-    'totalAnswered':0
-  }, 
+    '_id': '433333333333333333333301',
+    'correct': 0,
+    'incorrect': 0,
+    'score': 0,
+    'userId': '333333333333333333333301'
+  },
   {
-    '_id': '333333333333333333333302',
-    'correct': 0, 
-    'incorrect':0,
-    'totalAnswered':0
+    '_id': '433333333333333333333302',
+    'correct': 0,
+    'incorrect': 0,
+    'score': 0,
+    'userId': '333333333333333333333302'
   }
-]; 
+];
 
 const emojis = [
   {
@@ -112,4 +114,4 @@ const emojis = [
   }
 ];
 
-module.exports = { users, emojis , userStats}; 
+module.exports = { users, emojis, userStats }; 

@@ -1,28 +1,28 @@
-'use strict'; 
+'use strict';
 
-const express = require('express'); 
+const express = require('express');
 
-const UserStat = require('../models/userStat'); 
+const UserStat = require('../models/userStat');
 
-const router = express.Router(); 
+const router = express.Router();
 
 /* ========== GET USERSTAT BY ID ========== */
 
-router.get('/:id', (req, res, next) => {
-  const {id} = req.params; 
+router.get('/', (req, res, next) => {
+  const userId = req.user._id;
 
-  UserStat.findOne({_id: id})
+  UserStat.findOne({ userId })
     .then(stats => {
-      if(stats) {
-        res.json(stats); 
-      }else{
-        next(); 
-      }
+      res.json({
+        score: stats.score,
+        correct: stats.correct,
+        incorrect: stats.incorrect
+      });
     })
     .catch(err => {
       next(err);
-    }); 
-}); 
+    });
+});
 
 /* ========== CREATE USERSTAT ========== */
 
@@ -34,18 +34,19 @@ router.get('/:id', (req, res, next) => {
 // }
 
 router.post('/', (req, res, next) => {
-  const{_id, correct , incorrect, totalAnswered} = req.body; 
+  const userId = req.user._id;
+  const { correct, incorrect, score } = req.body;
 
-  UserStat.findOne({_id})
+  UserStat.findOne({ userId })
     .then(userStat => {
-      if(userStat){
+      if (userStat) {
         userStat.correct = correct;
-        userStat.incorrect = incorrect; 
-        userStat.totalAnswered = totalAnswered; 
-        userStat.save(); 
-        console.log(userStat); 
-      }else{
-        return UserStat.create({_id,correct,incorrect,totalAnswered});
+        userStat.incorrect = incorrect;
+        userStat.score = score;
+        userStat.save();
+        console.log(userStat);
+      } else {
+        return UserStat.create({ userId, correct, incorrect, score });
       }
     })
     .then(userStat => {

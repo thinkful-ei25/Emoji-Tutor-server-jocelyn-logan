@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get('/next', (req, res, next) => {
   const userId = req.user._id;
-  console.log(userId);
-  console.log(req.user);
+  // console.log(userId);
+  // console.log(req.user);
   // list.push(question);
   // res.json(question);
   User.findOne({ _id: userId })
@@ -18,7 +18,7 @@ router.get('/next', (req, res, next) => {
       // console.log('this is result', result);
       if (result) {
         const head = result.head;
-        console.log(head);
+        // console.log(head);
         const nextEmoji = result.list[head];
         res.json(nextEmoji);
       } else {
@@ -62,7 +62,7 @@ router.post('/answer', (req, res, next) => {
       } else {
         answeredQ.weight = 1;
       }
-      console.log('user list', user.list);
+      // console.log('user list', user.list);
       // console.log('weight', answeredQ.weight);
       //change the current head to whoever answered node's next 
       //pointer is addressed to
