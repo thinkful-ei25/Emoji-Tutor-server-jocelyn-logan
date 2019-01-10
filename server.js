@@ -12,6 +12,7 @@ const { dbConnect } = require('./db-mongoose');
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const questionsRouter = require('./routes/questions');
+const userStatsRouter = require('./routes/userStats'); 
 
 const app = express();
 app.use(express.json());
@@ -35,6 +36,7 @@ const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: tr
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/questions', jwtAuth, questionsRouter);
+app.use('/api/userStats', userStatsRouter); 
 
 function runServer(port = PORT) {
   const server = app

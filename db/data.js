@@ -73,11 +73,13 @@ const userStats = [
   {
     '_id': '333333333333333333333301',
     'correct':0, 
+    'incorrect':0,
     'totalAnswered':0
   }, 
   {
     '_id': '333333333333333333333302',
     'correct': 0, 
+    'incorrect':0,
     'totalAnswered':0
   }
 ]; 
@@ -110,4 +112,4 @@ const emojis = [
   }
 ];
 
-module.exports = { users, emojis }; 
+module.exports = { users, emojis , userStats}; 
