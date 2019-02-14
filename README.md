@@ -8,29 +8,13 @@ Demo account:
 username: demo 
 password: test123456
 
-## Preview
-- learn
-
-<img src="src/images/learnEmoji.JPG" width="450">
-
-- get feedback
-
-<img src="src/images/feedbackEmoji.JPG" width="450">
-
-
-- see stats
-
-<img src="src/images/statsEmoji.JPG" width="450">
-
-
-
 ## Tech Stack
 - Front End - ReactJs, Redux
 - Server Side - NodeJs, Express, Passport & bcrypt, JWT Auth, Mongoose 
 - Data Persistence - MongoDB
 - Hosting - Heroku, mLab
 - Dev Environment -  Git 💖
-- Server: https://github.com/thinkful-ei25/Emoji-Tutor-server-jocelyn-logan
+- Client: https://github.com/thinkful-ei25/Emoji-Tutor-client-jocelyn-logan
 ## Next steps
 - Adding stats per emoji
 - Add a tab with all emojis and their meanings for reference. 
